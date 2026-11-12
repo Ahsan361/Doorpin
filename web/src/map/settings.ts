@@ -1,6 +1,9 @@
-/** Map start position as [longitude, latitude]. Lahore is a placeholder until the first target city is chosen. */
-export const DEFAULT_CENTER: [number, number] = [74.3587, 31.5204];
-export const DEFAULT_ZOOM = 14;
+/**
+ * Map start position as [longitude, latitude]: Faizabad Interchange, where Islamabad and
+ * Rawalpindi meet. The twin cities are the first target area.
+ */
+export const DEFAULT_CENTER: [number, number] = [73.084, 33.663];
+export const DEFAULT_ZOOM = 12;
 
 /** Low-detail public demo style, used only when no style URL is configured. */
 export const FALLBACK_STYLE_URL = 'https://demotiles.maplibre.org/style.json';
