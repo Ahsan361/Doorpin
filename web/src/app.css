@@ -4,6 +4,14 @@ body {
   height: 100%;
 }
 
+/* Light only for now, to match the light map style; set explicitly so a phone's dark mode
+   can't leave dark text on a dark page. A dark theme can come with the final map style (Phase 6). */
+:root {
+  color-scheme: light;
+}
+
 body {
   font-family: system-ui, sans-serif;
+  color: #1f1f1f;
+  background: #ffffff;
 }
