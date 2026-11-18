@@ -100,6 +100,21 @@ describe('DrawnRouteInput', () => {
     expect(issuePaths({ ...validRoute(), title: 'a'.repeat(121) })).toEqual(['title']);
   });
 
+  it('rejects a NUL character in a title or note (the database cannot store it)', () => {
+    expect(issuePaths({ ...validRoute(), title: 'a\u0000b' })).toEqual(['title']);
+    const route = { ...validRoute(), landmarks: [{ position: at(5, 100), note: 'Gate\u0000' }] };
+    expect(issuePaths(route)).toEqual(['landmarks.0.note']);
+  });
+
+  it('rejects unknown fields at every level', () => {
+    expect(issuePaths({ ...validRoute(), ownerToken: 'x' })).toEqual(['']);
+    expect(issuePaths({ ...validRoute(), door: { ...at(60, 210), alt: 500 } })).toEqual(['door']);
+    const route = validRoute();
+    expect(
+      issuePaths({ ...route, landmarks: [{ position: at(5, 100), note: 'Gate', photo: 'x' }] }),
+    ).toEqual(['landmarks.0']);
+  });
+
   it('rejects coordinates out of range or not numbers', () => {
     expect(issuePaths({ ...validRoute(), door: { lat: 91, lng: 73 } })).toContain('door.lat');
     expect(issuePaths({ ...validRoute(), door: { lat: '33.6', lng: 73 } })).toContain('door.lat');

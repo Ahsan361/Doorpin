@@ -5,7 +5,7 @@ import nearestPointOnLine from '@turf/nearest-point-on-line';
 import { z } from 'zod';
 
 /** A point on the map. The API always uses this shape; MapLibre and PostGIS want [lng, lat] instead. */
-export const LatLng = z.object({
+export const LatLng = z.strictObject({
   lat: z.number().min(-90).max(90),
   lng: z.number().min(-180).max(180),
 });
