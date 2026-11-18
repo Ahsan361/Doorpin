@@ -79,12 +79,14 @@ Run these from the repository root.
 | `npm run db:up` / `npm run db:down` | Start or stop local PostGIS and Redis                            |
 | `npm run db:migrate`                | Apply new database migrations (safe to run repeatedly)           |
 | `npm run check`                     | Type-check, lint and format check. Must pass before every commit |
-| `npm test`                          | Run all unit tests                                               |
+| `npm test`                          | Run all tests. The server tests need `npm run db:up` first       |
 | `npm run format`                    | Format all files with Prettier                                   |
 
 ## Configuration
 
 All settings come from environment variables, listed with safe local defaults in [.env.example](.env.example). Never commit `.env`.
+
+The server tests use a separate `doorpin_test` database on the same local server. They create it and apply the migrations on their own, and refuse any database whose name doesn't end in `_test`, so they never touch your development data.
 
 Local PostGIS and Redis listen on ports **5433** and **6380**, bound to `127.0.0.1` only. The ports are not the usual 5432 and 6379, to avoid clashing with other local projects. Change `POSTGRES_PORT`, `REDIS_PORT` and the matching URLs in `.env` if you need different ones.
 
