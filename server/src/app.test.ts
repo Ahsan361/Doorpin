@@ -1,9 +1,15 @@
 import { Writable } from 'node:stream';
 import { HealthResponse } from '@doorpin/shared';
 import { pino } from 'pino';
-import { describe, expect, it } from 'vitest';
+import { afterAll, describe, expect, it } from 'vitest';
 import { createApp, type AppDeps, type HealthCheck } from './app.ts';
+import { connectTestDatabase } from './db/test-database.ts';
 import { listen } from './test-server.ts';
+
+const sql = connectTestDatabase();
+afterAll(async () => {
+  await sql.end();
+});
 
 const ok: HealthCheck = async () => undefined;
 const failing: HealthCheck = async () => {
@@ -12,7 +18,7 @@ const failing: HealthCheck = async () => {
 const hanging: HealthCheck = () => new Promise(() => {});
 
 async function request(deps: Partial<AppDeps>, path: string, init?: RequestInit) {
-  const app = createApp({ checkDatabase: ok, checkRedis: ok, checkTimeoutMs: 50, ...deps });
+  const app = createApp({ sql, checkDatabase: ok, checkRedis: ok, checkTimeoutMs: 50, ...deps });
   const server = await listen(app);
   try {
     const response = await fetch(server.url + path, init);

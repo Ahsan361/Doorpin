@@ -1,11 +1,11 @@
+import type { ApiError } from '@doorpin/shared';
 import type { ErrorRequestHandler, RequestHandler } from 'express';
 
-interface ErrorBody {
-  error: { code: string; message: string };
-}
+type ErrorDetails = NonNullable<ApiError['error']['details']>;
 
-function errorBody(code: string, message: string): ErrorBody {
-  return { error: { code, message } };
+/** The shared JSON error body. `details` lists what was wrong in a request body. */
+export function errorBody(code: string, message: string, details?: ErrorDetails): ApiError {
+  return { error: details === undefined ? { code, message } : { code, message, details } };
 }
 
 /** Answers any request that no route handled. */

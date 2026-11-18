@@ -2,12 +2,16 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import express, { type Express } from 'express';
 import { pino, type Logger } from 'pino';
 import { pinoHttp } from 'pino-http';
+import type { Sql } from 'postgres';
+import { drawnRoutesRouter } from './drawn-routes/router.ts';
 import { errorHandler, notFound } from './errors.ts';
 import { healthRouter, type HealthCheck } from './health.ts';
 
 export type { HealthCheck } from './health.ts';
 
 export interface AppDeps {
+  /** The database connection pool. */
+  sql: Sql;
   checkDatabase: HealthCheck;
   checkRedis: HealthCheck;
   /** How long a single health check may take before it counts as failed. */
@@ -40,6 +44,7 @@ export function createApp(deps: AppDeps): Express {
       timeoutMs: deps.checkTimeoutMs ?? DEFAULT_CHECK_TIMEOUT_MS,
     }),
   );
+  app.use('/api/v1/routes', drawnRoutesRouter(deps.sql));
 
   app.use(notFound);
   app.use(errorHandler);

@@ -30,6 +30,7 @@ redis.connect().catch(() => {
 
 const app = createApp({
   logger,
+  sql,
   checkDatabase: () => sql`SELECT 1`,
   checkRedis: () => redis.ping(),
 });
