@@ -13,6 +13,7 @@ import {
   routeProblems,
   setDoor,
   setTitle,
+  tapPlacesPoint,
   toRouteInput,
   undoPoint,
   updateLandmarkNote,
@@ -68,6 +69,15 @@ describe('drawing a path', () => {
     expect(pathLength(drawn())).toBeCloseTo(250, 0);
     expect(doorDistance(drawn())).toBeCloseTo(14.1, 0);
     expect(doorDistance(emptyDrawing())).toBeNull();
+  });
+});
+
+describe('taps', () => {
+  it('place a point only when zoomed in close enough (zoom 16 or more)', () => {
+    expect(tapPlacesPoint(12)).toBe(false);
+    expect(tapPlacesPoint(15.9)).toBe(false);
+    expect(tapPlacesPoint(16)).toBe(true);
+    expect(tapPlacesPoint(18)).toBe(true);
   });
 });
 

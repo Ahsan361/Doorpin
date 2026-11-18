@@ -32,6 +32,14 @@ export interface Problem {
   message: string;
 }
 
+/** Below this map zoom one pixel covers too much ground to place a point; a tap zooms in instead. */
+export const MIN_TAP_ZOOM = 16;
+
+/** Whether a tap at this zoom places a point (rather than zooming in to that spot). */
+export function tapPlacesPoint(zoom: number): boolean {
+  return zoom >= MIN_TAP_ZOOM;
+}
+
 export function emptyDrawing(): Drawing {
   return { title: '', door: null, points: [], landmarks: [] };
 }
