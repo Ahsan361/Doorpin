@@ -1,4 +1,4 @@
-import { CreatedDrawnRoute, DrawnRoute, DrawnRouteInput } from '@doorpin/shared';
+import { CreatedDrawnRoute, DrawnRoute, DrawnRouteInput, RouteId } from '@doorpin/shared';
 import { Router, type Request, type Response } from 'express';
 import type { Sql } from 'postgres';
 import { z } from 'zod';
@@ -10,8 +10,6 @@ import {
   insertDrawnRoute,
   replaceDrawnRoute,
 } from './store.ts';
-
-const RouteId = z.uuid();
 
 /**
  * The route id, if the request carries this route's owner token; otherwise undefined.
