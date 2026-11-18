@@ -1,6 +1,6 @@
 # Doorpin
 
-Doorpin helps delivery riders find the exact door in the last 500 meters, where normal maps fail. A sender draws the real route on a map and adds landmarks, shares one link, and the customer watches the rider arrive live. Riders need no app and no sign-up.
+Doorpin guides delivery riders all the way to the exact door, including the last stretch where normal maps fail. A sender draws the real path from their door out to an entry point, such as a society gate, adds landmarks and shares one link. The rider gets road directions to the entry point, then follows the drawn path, while the customer watches the rider arrive live. Riders need no app and no sign-up.
 
 > Status: MVP Phase 0 (foundations). The map, API and database are set up; product features start in Phase 1.
 
